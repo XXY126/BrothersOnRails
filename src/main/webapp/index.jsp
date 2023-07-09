@@ -3,28 +3,7 @@
 <head>
   <title>Homepage</title>
   <%@include file="include/head.jsp" %>
-  <style>
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #ff0000 !important;
-    }
-
-    .product-row {
-      padding: 40px 0;
-      background-color: #f9f9f9;
-    }
-        /* Stile personalizzato per il Carousel */
-    .carousel {
-      width: 100%%; /* Imposta la larghezza desiderata */
-      height: 50%; /* Imposta l'altezza desiderata */
-    }
-    
-    .footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px 0;
-    }
-
-  </style>
+  <link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
 
