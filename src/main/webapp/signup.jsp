@@ -7,6 +7,33 @@
 <body>
 <%@include file="include/header.jsp" %>
 
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
+" rel="stylesheet">
+<%String status = (String) request.getAttribute("status");%>
+<script type ="text/javascript">
+	if('<%= status %>' == 'success'){
+		Swal.fire("Congratulazione!", "Account creato correttamente!", "success");
+	}else if('<%= status %>' == 'duplicato'){
+		Swal.fire("Spiacente!", "Email gia presente nel sito","error");
+	}else if('<%= status %>' == 'Invalid_email'){
+		Swal.fire("Spiacente!", "Inserire indirizzo email valido", "error");
+	}
+</script>
+
+
+
+
+
   <div class="container">
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
@@ -38,59 +65,7 @@
       </div>
     </div>
   </div>
-  
-    <script>
-    document.getElementById("registrationForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
-      var confirmPassword = document.getElementById("confirmPassword").value;
 
-      var emailError = document.getElementById("emailError");
-      var passwordError = document.getElementById("passwordError");
-      var confirmPasswordError = document.getElementById("confirmPasswordError");
-
-      emailError.textContent = "";
-      passwordError.textContent = "";
-      confirmPasswordError.textContent = "";
-
-      if (email === "") {
-        emailError.textContent = "Inserisci un indirizzo email";
-        emailError.style.color = "red";
-        return;
-      }
-
-      if (password.length < 8) {
-        passwordError.textContent = "La password deve contenere almeno 8 caratteri";
-        passwordError.style.color = "red";
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        confirmPasswordError.textContent = "Le password non corrispondono";
-        confirmPasswordError.style.color = "red";
-        return;
-      }
-
-      showAlert("Registrazione effettuata con successo", "alert-success");
-      document.getElementById("registrationForm").reset();
-    });
-
-    function showAlert(message, className) {
-      var alertDiv = document.createElement("div");
-      alertDiv.className = "alert " + className;
-      alertDiv.appendChild(document.createTextNode(message));
-
-      var container = document.querySelector(".container");
-      var row = document.querySelector(".row");
-      container.insertBefore(alertDiv, row);
-
-      setTimeout(function() {
-        alertDiv.remove();
-      }, 3000);
-    }
-  </script>
-  
 
 <%@include file="include/footer.jsp" %>
 </body>

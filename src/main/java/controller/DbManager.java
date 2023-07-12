@@ -29,5 +29,7 @@ public class DbManager {
 			logger.log(Level.ALL, error, e);
 			return null;
 		}
+		
+		
 	}
 }
