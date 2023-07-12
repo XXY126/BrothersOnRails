@@ -13,12 +13,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
-<script src="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js
-"></script>
-<link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
-" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
 <%String status = (String) request.getAttribute("status");%>
 <script type ="text/javascript">
 	if('<%= status %>' == 'success'){
@@ -29,10 +25,6 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
 		Swal.fire("Spiacente!", "Inserire indirizzo email valido", "error");
 	}
 </script>
-
-
-
-
 
   <div class="container">
     <div class="row justify-content-center mt-5">

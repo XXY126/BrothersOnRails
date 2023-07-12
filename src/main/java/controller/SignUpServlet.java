@@ -31,42 +31,49 @@ public class SignUpServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		RequestDispatcher dispatcher = null;
-		String q = "SELECT email FROM utente WHERE email=?";	
-		String query = "INSERT INTO utente(nome,cognome,email,password) values(?,?,?,?)";
-		
+		String query1 = "SELECT email FROM utente WHERE email=?";
+		String query2 = "INSERT INTO utente(nome,cognome,email,password) values(?,?,?,?)";
+		String query3 = "SELECT email FROM admin WHERE email=?";
 		
 		try (Connection connection = DbManager.getConnection();
-			PreparedStatement ps1 = connection.prepareStatement(q);
-			PreparedStatement ps2 = connection.prepareStatement(query)){		
+			PreparedStatement ps1 = connection.prepareStatement(query1);
+			PreparedStatement ps2 = connection.prepareStatement(query2);
+			PreparedStatement ps3 = connection.prepareStatement(query3)){
+			
+			System.out.println(email);
 			ps1.setString(1,  email);
-			ResultSet rs = ps1.executeQuery(q);
+			System.out.println(ps1);
+			ResultSet rs = ps1.executeQuery();
+			ps3.setString(1, email);
+			ResultSet rs3 = ps3.executeQuery();
+
 			
 			if(rs.next()) {
 				request.setAttribute(status, "duplicato");
 				dispatcher = request.getRequestDispatcher("signup.jsp");
-				dispatcher.forward(request, response);
-				return;
+				/*response.sendRedirect("/signup.jsp");*/
+			} else if(rs3.next()){
+				request.setAttribute(status, "duplicato");
+				dispatcher = request.getRequestDispatcher("signup.jsp");
 			}
-			
-			ps2.setString(1, nome);
-			ps2.setString(2, cognome);
-			ps2.setString(3, email);
-			ps2.setString(4, password);
-
-			int rowCount = 0;
-
-			rowCount = ps2.executeUpdate();
-			dispatcher = request.getRequestDispatcher("login.jsp");
-			
-			if (rowCount > 0) {
-				request.setAttribute(status, "success");
-
-			} else {
-				request.setAttribute(status, "failed");
+			else {
+				ps2.setString(1, nome);
+				ps2.setString(2, cognome);
+				ps2.setString(3, email);
+				ps2.setString(4, password);
+				
+				int rowCount = 0;
+				
+				rowCount = ps2.executeUpdate();
+				dispatcher = request.getRequestDispatcher("login.jsp");
+				if (rowCount > 0) {
+					request.setAttribute(status, "success");
+				} else {
+					request.setAttribute(status, "failed");
+				}
+				/*response.sendRedirect("/login.jsp");*/
 			}
-
 			dispatcher.forward(request, response);
-
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
 		} catch (ServletException e) {
