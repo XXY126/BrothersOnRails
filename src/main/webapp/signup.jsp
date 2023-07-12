@@ -11,8 +11,16 @@
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
         <h2 class="text-center mb-4">Registrazione</h2>
-        <form id="registrationForm">
-          <div class="form-group">
+        <form id="registrationForm" action = "SignUpServlet" method = "POST">
+        <div class="form-group" >
+            <label for="nome">Nome</label>
+            <input type="nome" class="form-control" id="nome" name="nome" required>
+          </div>
+          <div class="form-group" action = "SignupServlet" method = "POST">
+            <label for="email">Cognome</label>
+            <input type="cognome" class="form-control" id="cognome" name="cognome" required>
+          </div>
+          <div class="form-group" action = "SignupServlet" method = "POST">
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
           </div>
@@ -63,8 +71,6 @@
         confirmPasswordError.style.color = "red";
         return;
       }
-
-      // Puoi eseguire qui la logica di registrazione o inviare i dati al server
 
       showAlert("Registrazione effettuata con successo", "alert-success");
       document.getElementById("registrationForm").reset();

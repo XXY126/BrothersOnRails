@@ -20,7 +20,7 @@
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
         <h2 class="text-center mb-4">Accesso</h2>
-        <form id="loginForm">
+        <form id="loginForm" action="Login" method="POST">
           <div class="form-group">
             <label for="username">Nome utente</label>
             <input type="text" class="form-control" id="username" name="username" required>
@@ -35,6 +35,8 @@
       </div>
     </div>
   </div>
+  
+  
   
   <%@include file="include/footer.jsp" %>
   

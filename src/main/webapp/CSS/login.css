@@ -1,4 +1,11 @@
 @charset "UTF-8";
-.container {
-  min-height: calc(100% - 10%);
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+.container {
+  min-height: calc(100% - 20%);
+}
+
