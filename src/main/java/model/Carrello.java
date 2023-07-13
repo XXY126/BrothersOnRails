@@ -7,9 +7,11 @@ import java.util.List;
 public class Carrello implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private transient ArrayList<Prodotto> list = new ArrayList<>();
-	private int Id;
+	private String Id;
 	
-	public Carrello(int id) {
+	
+	
+	public Carrello(String id) {
 		this.Id = id;
 	}
 	
@@ -17,7 +19,7 @@ public class Carrello implements Serializable{
 		return list;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return Id;
 	}
 

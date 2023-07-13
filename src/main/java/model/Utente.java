@@ -10,6 +10,12 @@ public class Utente implements Serializable{
 	private String cognome;
 	private String telefono;
 	
+	public Utente(String email, String nome, String cognome) {
+		this.email = email;
+		this.nome = nome;
+		this.cognome = cognome;
+	}
+	
 	public String getEmail() {
 		return email;
 	}

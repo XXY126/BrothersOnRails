@@ -4,13 +4,19 @@
 <html>
 <head>
 <%@include file="include/head.jsp"%>
-
-<style type="text/css">
-.container{
-  width: 100%;
-  height: 100%;
-}
-</style>
+<input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
+" rel="stylesheet">
+<%String status = (String) request.getAttribute("status");%>
+<script type ="text/javascript">
+	if('<%= status %>' == 'failed'){
+		Swal.fire("Spiacente!", "Email o Password errati", "error");
+	}
+</script>
 <title>LogIn</title>
 </head>
 <body>
@@ -20,7 +26,7 @@
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
         <h2 class="text-center mb-4">Accesso</h2>
-        <form id="loginForm" action="Login" method="POST">
+        <form id="loginForm" action="LoginServlet" method="POST">
           <div class="form-group">
             <label for="username">Nome utente</label>
             <input type="text" class="form-control" id="username" name="username" required>
