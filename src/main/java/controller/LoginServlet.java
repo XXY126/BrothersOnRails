@@ -22,7 +22,7 @@ import model.Indirizzo;
 import model.Prodotto;
 import model.Utente;
 
-@WebServlet("/Login")
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(LoginServlet.class.getName());
@@ -37,6 +37,10 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		RequestDispatcher dispatcher = null;
 		String query = "SELECT * FROM utente WHERE email = ? and password = ?";
+		
+		System.out.println("debug:1");
+		System.out.println(email);
+		System.out.println(password);
 
 		try (Connection connection = DbManager.getConnection();
 			Statement s = connection.createStatement();
@@ -46,87 +50,126 @@ public class LoginServlet extends HttpServlet {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
+				System.out.println("debug:2");
 				String id = rs.getString("email");
 				String nome = rs.getString("nome");
 				String cognome = rs.getString("cognome");
 				Utente user = new Utente(id, nome, cognome);
+				System.out.println("debut:3");
 
-				query = "SELECT * FROM indirizzo WHERE id_utente = " + id;
-				rs = s.executeQuery(query);
+				query = "SELECT * FROM indirizzo WHERE id_utente =?";
+				System.out.println(query);
+				PreparedStatement ps1 = connection.prepareStatement(query);
+				ps1.setString(1, id);
+				System.out.println("debut:4");
+				System.out.println(query);
+				ResultSet rs1 = ps1.executeQuery();
+				System.out.println("debut:5");
 
 				/* quando si fa il log in, vengono caricate anche le info sull'indirizzo */
-				if (rs.next()) {
-					String indirizzo = rs.getString("via");
-					String cap = rs.getString("cap");
-					String citta = rs.getString("citta");
-					String provincia = rs.getString("provincia");
-					String nazione = rs.getString("nazione");
-					String numeroCivico = rs.getString("numeroCivico");
+				if (rs1.next()) {
+					System.out.println("debug: indirizzo esistente");
+					String indirizzo = rs1.getString("via");
+					String cap = rs1.getString("cap");
+					String citta = rs1.getString("citta");
+					String provincia = rs1.getString("provincia");
+					String nazione = rs1.getString("nazione");
+					String numeroCivico = rs1.getString("numeroCivico");
 					Indirizzo i = new Indirizzo(indirizzo, cap, citta, provincia, nazione, numeroCivico);
 					session.setAttribute(address, i);
 				} else {
+					System.out.println("debug: Indirizzo assente");
 					/* se l'indirizzo è inesistente, ne viene creato uno di default (serve per i placeholder */
 					session.setAttribute(address, new Indirizzo("Inserisci i tuoi dati", "", "", "", "",""));
 				}
 				
-				query = "SELECT * FROM carrello WHERE id_utente=" + id;
-				rs =  s.executeQuery(query);
+				System.out.println("debug:6");
+				query = "SELECT * FROM carrello WHERE id_utente=?";
+				PreparedStatement ps2 = connection.prepareStatement(query);
+				ps2.setString(1, id);
+				ResultSet rs2;
+				rs2 =  ps2.executeQuery();
+				
+				System.out.println("debug:7");
 				
 				String carrelloid = null;
 				Carrello carrello = null;
 				
 				//se l'utente ha un carrello assegnato lo si prende e lo si assegna 
-				if(rs.next()) {
-				      carrelloid = rs.getString("id_carrello");
+				if(rs2.next()) {
+					System.out.println("carrello presente");
+				      carrelloid = rs2.getString("id_carrello");
 					  carrello = new Carrello(carrelloid);
 				}
 				else {
-					query = "INSERT INTO carrello(utente_id) VALUES (" + id + ")";
-					s.executeUpdate(query);
-					query = "SELECT * FROM carrello WHERE id_utente=" + id;
-					rs = s.executeQuery(query);
+					System.out.println("carrello assente");
+					query="INSERT INTO carrello(id_utente) values (?)";
+					PreparedStatement ps3 = connection.prepareStatement(query);
+					ps3.setString(1, id);
+					int rs3 = ps3.executeUpdate();
+					
+					query="SELECT * FROM carrello where id_utente=?";
+					PreparedStatement ps4 = connection.prepareStatement(query);
+					ps4.setString(1, id);
+					ResultSet rs4 = ps4.executeQuery();
+					
 					if(rs.next()) {
-						 carrelloid = rs.getString("id");
+						 carrelloid = rs.getString("id_carrello");
 						 carrello = new Carrello(carrelloid);
 					}
 				}
 				
+				System.out.println("debug:8");
+				
 				//popolazione del carrello
 				//controllo i prodotti che appartengono attualmente al carrello
-				query = "SELECT * FROM contiene WHERE carrello_id=" + carrelloid;
-				rs = s.executeQuery(query);
+				query="SELECT * FROM contiene WHERE id_carrello = ?";
+				PreparedStatement ps5 = connection.prepareStatement(query);
+				ps5.setString(1, carrelloid);
+				ResultSet rs5 = ps5.executeQuery();
+				
+				System.out.println("debug:9");
 				
 				ArrayList<Prodotto> list = (ArrayList<Prodotto>) carrello.getCarrello();
 				ArrayList<String> idProdottoList = new ArrayList<>();
-				while(rs.next()) {
-					String id_prodotto = rs.getString("id_prodotto");
+				while(rs5.next()) {
+					String id_prodotto = rs5.getString("id_prodotto");
 					idProdottoList.add(id_prodotto);
 				}
 				
+				System.out.println("debug:10");
+				
 				//QUERY CHE PRENDE I PRODOTTI PRESENTE NEL CARRELLO CON ID CORRISPONDENTE AL CARELLO DELL'UTENTE
-				query = "SELECT prodotto.nome, prodotto.costo, prodotto.id_categoria, prodotto.img,contiene.quantita FROM prodotto INNER JOIN contiene ON contiene.id_prodotto=prodotto.IDProdotto WHERE contiene.id_carrello ="+carrelloid;
-				rs = s.executeQuery(query);
+				query = "SELECT prodotto.nome, prodotto.costo, prodotto.id_categoria, prodotto.img,contiene.quantita FROM prodotto INNER JOIN contiene ON contiene.id_prodotto=prodotto.IDProdotto WHERE contiene.id_carrello =?";
+				PreparedStatement ps6 = connection.prepareStatement(query);
+				ps6.setString(1, carrelloid);
+				ResultSet rs6 = ps6.executeQuery();
 				
+				System.out.println("debug:11");
 				
-				
-				while(rs.next()) {
-					if(idProdottoList.contains(rs.getString("IDProdotto"))){
-						String nomeprod = rs.getString("nome");
-						String descrizione = rs.getString("descrizione");
-						String img = rs.getString("img");
-						String categoria = rs.getString("id_categoria");
-						int quantita = rs.getInt("quantita");
-						double prezzo = rs.getDouble("prezzo");
-						Prodotto prodotto = new Prodotto(rs.getString("id_prodotto"), nomeprod, descrizione, img, categoria, quantita, prezzo);
+				while(rs6.next()) {
+					if(idProdottoList.contains(rs6.getString("IDProdotto"))){
+						String nomeprod = rs6.getString("nome");
+						String descrizione = rs6.getString("descrizione");
+						String img = rs6.getString("img");
+						String categoria = rs6.getString("id_categoria");
+						int quantita = rs6.getInt("quantita");
+						double prezzo = rs6.getDouble("prezzo");
+						Prodotto prodotto = new Prodotto(rs6.getString("id_prodotto"), nomeprod, descrizione, img, categoria, quantita, prezzo);
 						list.add(prodotto);
 					}
 				}
+				
+				System.out.println("debug:11");
 				carrello.setCarrello(list);
 				session.setAttribute("carrello", carrello);
 				session.setAttribute("user", user);
+				System.out.println("debug:12");
 				dispatcher = request.getRequestDispatcher("index.jsp");
+				System.out.println("fine if carrello presente");
 				
 			} else {
+				System.out.println("login failed");
 				request.setAttribute("status", "failed");
 				dispatcher = request.getRequestDispatcher("login.jsp");
 			}

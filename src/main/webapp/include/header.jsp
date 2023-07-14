@@ -17,5 +17,6 @@
         <a class="btn btn-danger" href="index.jsp" role="button">Home</a>
         <a class="btn btn-danger" href="#" role="button">Catalogo</a>
         <a class="btn btn-danger" href="login.jsp" role="button">LogIn</a>
+        <a class="btn btn-danger" href="carrello.jsp" role="button">Carrello</a>
       </div>
-    </nav>
+</nav>

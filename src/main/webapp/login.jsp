@@ -1,22 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <%@include file="include/head.jsp"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
-<script src="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js
-"></script>
-<link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
-" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
 <%String status = (String) request.getAttribute("status");%>
 <script type ="text/javascript">
 	if('<%= status %>' == 'failed'){
 		Swal.fire("Spiacente!", "Email o Password errati", "error");
 	}
 </script>
+
 <title>LogIn</title>
 </head>
 <body>
@@ -29,7 +26,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
         <form id="loginForm" action="LoginServlet" method="POST">
           <div class="form-group">
             <label for="username">Nome utente</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input type="text" class="form-control" id="email" name="email" required>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -45,44 +42,5 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
   
   
   <%@include file="include/footer.jsp" %>
-  
-    <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      var username = document.getElementById("username").value;
-      var password = document.getElementById("password").value;
-
-      if (username === "") {
-        showAlert("Il nome utente è obbligatorio", "alert-danger");
-        return;
-      }
-
-      if (password === "") {
-        showAlert("La password è obbligatoria", "alert-danger");
-        return;
-      }
-
-      // Qui puoi eseguire la logica di autenticazione o inviare i dati al server
-
-      showAlert("Accesso effettuato con successo", "alert-success");
-      document.getElementById("loginForm").reset();
-    });
-
-    function showAlert(message, className) {
-      var alertDiv = document.createElement("div");
-      alertDiv.className = "alert " + className;
-      alertDiv.appendChild(document.createTextNode(message));
-
-      var container = document.querySelector(".container");
-      var row = document.querySelector(".row");
-      container.insertBefore(alertDiv, row);
-
-      setTimeout(function() {
-        alertDiv.remove();
-      }, 3000);
-    }
-  </script>
-
-
 </body>
 </html>
