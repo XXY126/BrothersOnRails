@@ -6,34 +6,21 @@
 
 <head>
 <title>Catalogo</title>
-<script src="jquery-3.6.4.min.js"></script>
-</head>
 <jsp:include page="/include/head.jsp" flush="true" />
-<body>
-	<jsp:include page="/include/header.jsp" flush="true" />
-	<script src="./scripts/dynamicCode.js"></script>
-	  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var filtroBottone = document.getElementById('filtroBottone');
-      var filtri = document.getElementById('filtri');
+</head>
+<%@include file="include/header.jsp" %>
+<script src="scripts/jquery-3.7.0.min.js"></script>
+<script src="scripts/dynamicCode.js"></script>
 
-      filtroBottone.addEventListener('click', function() {
-        if (filtri.style.display === 'none') {
-          filtri.style.display = 'block';
-          filtroBottone.textContent = 'Nascondi filtri';
-        } else {
-          filtri.style.display = 'none';
-          filtroBottone.textContent = 'Mostra filtri';
-        }
-      });
-    });
-  </script>
 	<script>
 		$(document).ready(function() {
-		  	dynamicCatalog("<%=request.getContextPath()%>/CatalogoServlet");
-		  	dynamicCategorie("<%=request.getContextPath()%>/CategoriaServlet");
+			dynamicCatalog("<%=request.getContextPath()%>/CatalogoServlet");
+			dynamicCategorie("<%=request.getContextPath()%>/CategoriaServlet");
 		});
 	</script>
+	
+<body>
+	<jsp:include page="/include/header.jsp" flush="true"/>
 	<main>
 		<section id="container">
 			<div id="filtri">

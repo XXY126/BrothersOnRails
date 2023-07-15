@@ -23,13 +23,13 @@ public class DbManager {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			return DriverManager.getConnection(dbURL, userName, pass);
 		} catch (SQLException e) {
+			System.out.println("b");
 			logger.log(Level.ALL, error, e);
 			return null;
 		} catch (ClassNotFoundException e) {
+			System.out.println("a");
 			logger.log(Level.ALL, error, e);
 			return null;
 		}
-		
-		
 	}
 }
