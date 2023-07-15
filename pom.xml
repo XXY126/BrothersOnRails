@@ -28,7 +28,7 @@
     </plugins>
   </build>
   
-  	<dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -40,10 +40,21 @@
 			<version>1.2.6</version>
 		</dependency>
 		<dependency>
+    <groupId>org.webjars.bower</groupId>
+    <artifactId>jquery.ajax</artifactId>
+    <version>1.2.0</version>
+</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -64,6 +75,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-text</artifactId>
 			<version>1.9</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.webjars</groupId>
+    		<artifactId>jquery</artifactId>
+    		<version>3.6.4</version>
 		</dependency>
 	</dependencies>
   
