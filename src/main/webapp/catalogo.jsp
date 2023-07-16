@@ -7,10 +7,26 @@
 <head>
 <title>Catalogo</title>
 <jsp:include page="/include/head.jsp" flush="true" />
-</head>
-<%@include file="include/header.jsp" %>
-<script src="scripts/jquery-3.7.0.min.js"></script>
+<script src="scripts/jquery-3.7.0.js"></script>
 <script src="scripts/dynamicCode.js"></script>
+</head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var filtroBottone = document.getElementById('filtroBottone');
+      var filtri = document.getElementById('filtri');
+
+      filtroBottone.addEventListener('click', function() {
+        if (filtri.style.display === 'none') {
+          filtri.style.display = 'block';
+          filtroBottone.textContent = 'Nascondi filtri';
+        } else {
+          filtri.style.display = 'none';
+          filtroBottone.textContent = 'Mostra filtri';
+        }
+      });
+    });
+</script>
 
 	<script>
 		$(document).ready(function() {

@@ -1,4 +1,4 @@
-
+/*import{} from "jquery-3.7.0.js"*/
 
 function dynamicIndex(url) {
 	$.ajax({
@@ -62,12 +62,12 @@ function dynamicCatalog(url) {
 		let contenutoHtml = "";
 
 		for (const p of response) {
-			contenutoHtml += "<div class=\"scheda\" data-categoria=\"" + p.categoria + "\" data-genere=\"" + p.genere + "\">";
-			contenutoHtml += "<a href=\"ProductServlet?isbn=" + p.isbn + "\"><img src=\"" + p.img + "\" class=\"trash\"></a>";
+			contenutoHtml += "<div class=\"scheda\" data-categoria=\"" + p.categoria + "\">";
+			contenutoHtml += "<a href=\"ProductServlet?isbn=" + p.id + "\"><img src=\"" + p.img + "\" class=\"trash\"></a>";
 			contenutoHtml += "<div class=\"info\">" + "\n";
 			contenutoHtml += "<h4 class=\"pname\">" + p.nome + "</h4>" + "\n";
 			contenutoHtml += "<p> &#8364 " + p.prezzo.toFixed(2) + "</p>" + "\n";
-			contenutoHtml +=  "<a onclick=\"addCart(" + p.quantita + ", '" + p.isbn + "')\"> Carrello</a>";
+			contenutoHtml +=  "<a onclick=\"addCart(" + p.quantita + ", '" + p.id + "')\"> Carrello</a>";
 			contenutoHtml += "</div>";
 			contenutoHtml += "</div>";
 		}
