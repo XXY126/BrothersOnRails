@@ -63,11 +63,11 @@ function dynamicCatalog(url) {
 
 		for (const p of response) {
 			contenutoHtml += "<div class=\"scheda\" data-categoria=\"" + p.categoria + "\">";
-			contenutoHtml += "<a href=\"ProductServlet?isbn=" + p.id + "\"><img src=\"" + p.img + "\" class=\"trash\"></a>";
+			contenutoHtml += "<a href=\"ProductServlet?isbn=" + p.idProdotto + "\"><img src=\"" + p.img + "\" class=\"trash\"></a>";
 			contenutoHtml += "<div class=\"info\">" + "\n";
 			contenutoHtml += "<h4 class=\"pname\">" + p.nome + "</h4>" + "\n";
 			contenutoHtml += "<p> &#8364 " + p.prezzo.toFixed(2) + "</p>" + "\n";
-			contenutoHtml +=  "<a onclick=\"addCart(" + p.quantita + ", '" + p.id + "')\"> Carrello</a>";
+			contenutoHtml +=  "<a onclick=\"addCart(" + p.quantita + ", '" + p.idProdotto + "')\"> Carrello</a>";
 			contenutoHtml += "</div>";
 			contenutoHtml += "</div>";
 		}
@@ -105,11 +105,11 @@ function dynamicConsigliati(url) {
 
 		for (const prodotto of response) {
 			contenutoHtml += "<div class=\"scheda\">";
-			contenutoHtml += "<a href=\"ProductServlet?isbn=" + prodotto.isbn + "\"><img src=\"" + prodotto.img + "\"> </a>";
+			contenutoHtml += "<a href=\"ProductServlet?isbn=" + prodotto.idProdotto + "\"><img src=\"" + prodotto.img + "\"> </a>";
 			contenutoHtml += "<div class=\"info\">";
 			contenutoHtml += "<h4>" + prodotto.nome + "</h4>";
 			contenutoHtml += "<p>&#8364 " + prodotto.prezzo.toFixed(2) + "</p>";
-			contenutoHtml += "<a onclick=\"addCart(" + prodotto.quantita + ", '" + prodotto.isbn + "')\"> Carrello</a>";
+			contenutoHtml += "<a onclick=\"addCart(" + prodotto.quantita + ", '" + prodotto.idProdotto + "')\"> Carrello</a>";
 			contenutoHtml += "</div> </div>";
 		}
 

@@ -37,23 +37,31 @@
 	
 <body>
 	<jsp:include page="/include/header.jsp" flush="true"/>
-	<main>
-		<section id="container">
-			<div id="filtri">
-				<h2>Filtra Per</h2>
-				<table>
-					<tbody id="categorie">
-
-					</tbody>
-				</table>
-			</div>
-		
-<div id="filtroBottone">Mostra filtri</div>
-		<section id="prodotti">
-			<div id="schedeProdotto"></div>
-		</section>
-	</section>
-	</main>
+    <main class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Add Bootstrap Card for Filters -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Filtra Per</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <tbody id="categorie">
+                                <!-- Categories will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="filtroBottone">Mostra filtri</button>
+            </div>
+            <div class="col-md-9">
+                <div class="row" id="schedeProdotto">
+                    <!-- Product cards will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </main>
 	<jsp:include page="/include/footer.jsp" flush="true" />
 </body>
 </html>

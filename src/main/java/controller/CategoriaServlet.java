@@ -29,7 +29,6 @@ public class CategoriaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Gson json = new Gson();
-		System.out.println("debug:categoriaservlet");
 		try (Connection connection = DbManager.getConnection(); Statement s = connection.createStatement();) {
 			PrintWriter out = response.getWriter();
 			ArrayList<String> categorie = new ArrayList<>();

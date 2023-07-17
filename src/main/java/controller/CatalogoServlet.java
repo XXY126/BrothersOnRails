@@ -40,6 +40,7 @@ public class CatalogoServlet extends HttpServlet {
 
 			System.out.println("debug:catalogoservlet");
 			ResultSet rs = ps.executeQuery();
+			System.out.println("debug: query eseguita");
 
 			while (rs.next()) {
 				String id = rs.getString("IDProdotto");
@@ -48,13 +49,11 @@ public class CatalogoServlet extends HttpServlet {
 				String img = rs.getString("img");
 				String categoria = rs.getString("id_categoria");
 				int quantita = rs.getInt("quantita");
-				double prezzo = rs.getDouble("prezzo");
+				double prezzo = rs.getDouble("costo");
 				Prodotto p = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
-
 				catalogo.add(p);
 			}
 			out.write(json.toJson(catalogo));
-
 			rs.close();
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
