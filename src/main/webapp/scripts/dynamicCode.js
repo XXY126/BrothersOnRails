@@ -61,16 +61,17 @@ function dynamicCatalog(url) {
 		response = JSON.parse(response);
 		let contenutoHtml = "";
 
-		for (const p of response) {
-			contenutoHtml += "<div class=\"scheda\" data-categoria=\"" + p.categoria + "\">";
-			contenutoHtml += "<a href=\"ProductServlet?isbn=" + p.idProdotto + "\"><img src=\"" + p.img + "\" class=\"trash\"></a>";
-			contenutoHtml += "<div class=\"info\">" + "\n";
-			contenutoHtml += "<h4 class=\"pname\">" + p.nome + "</h4>" + "\n";
-			contenutoHtml += "<p> &#8364 " + p.prezzo.toFixed(2) + "</p>" + "\n";
-			contenutoHtml +=  "<a onclick=\"addCart(" + p.quantita + ", '" + p.idProdotto + "')\"> Carrello</a>";
-			contenutoHtml += "</div>";
-			contenutoHtml += "</div>";
-		}
+    for (const p of response) {
+        contenutoHtml += '<div class="card scheda" data-categoria="' + p.categoria + '">';
+        contenutoHtml += '<a href="ProductServlet?isbn=' + p.idProdotto + '"><img src="' + p.img + '" class="card-img-top trash"></a>';
+        contenutoHtml += '<div class="card-body">';
+        contenutoHtml += '<h4 class="card-title pname">' + p.nome + '</h4>';
+        contenutoHtml += '<p class="card-text">&#8364 ' + p.prezzo.toFixed(2) + '</p>';
+        contenutoHtml += '<a href="#" onclick="addCart(' + p.quantita + ', \'' + p.idProdotto + '\')" class="btn btn-primary">Carrello</a>';
+        contenutoHtml += '</div>';
+        contenutoHtml += '</div>';
+    }
+
 		$("#schedeProdotto").append(contenutoHtml);
 	});
 }
