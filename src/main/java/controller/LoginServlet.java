@@ -133,14 +133,17 @@ public class LoginServlet extends HttpServlet {
 				ArrayList<Prodotto> list = (ArrayList<Prodotto>) carrello.getCarrello();
 				ArrayList<String> idProdottoList = new ArrayList<>();
 				while(rs5.next()) {
+					
 					String id_prodotto = rs5.getString("id_prodotto");
+					System.out.println("id prodotto = "+id_prodotto);
 					idProdottoList.add(id_prodotto);
 				}
 				
 				System.out.println("debug:10");
+				System.out.println("debug: carrelloid ="+carrelloid);
 				
 				//QUERY CHE PRENDE I PRODOTTI PRESENTE NEL CARRELLO CON ID CORRISPONDENTE AL CARELLO DELL'UTENTE
-				query = "SELECT prodotto.nome, prodotto.costo, prodotto.id_categoria, prodotto.img,contiene.quantita FROM prodotto INNER JOIN contiene ON contiene.id_prodotto=prodotto.IDProdotto WHERE contiene.id_carrello =?";
+				query = "SELECT prodotto.IDProdotto, prodotto.nome, prodotto.descrizione, prodotto.costo, prodotto.id_categoria, prodotto.img,contiene.quantita FROM prodotto INNER JOIN contiene ON contiene.id_prodotto=prodotto.IDProdotto WHERE contiene.id_carrello =?";
 				PreparedStatement ps6 = connection.prepareStatement(query);
 				ps6.setString(1, carrelloid);
 				ResultSet rs6 = ps6.executeQuery();
@@ -154,17 +157,19 @@ public class LoginServlet extends HttpServlet {
 						String img = rs6.getString("img");
 						String categoria = rs6.getString("id_categoria");
 						int quantita = rs6.getInt("quantita");
-						double prezzo = rs6.getDouble("prezzo");
-						Prodotto prodotto = new Prodotto(rs6.getString("id_prodotto"), nomeprod, descrizione, img, categoria, quantita, prezzo);
+						double prezzo = rs6.getDouble("costo");
+						System.out.println(nomeprod+descrizione+ img+ categoria+ quantita+ prezzo);
+						Prodotto prodotto = new Prodotto(rs6.getString("IDProdotto"), nomeprod, descrizione, img, categoria, quantita, prezzo);
 						list.add(prodotto);
+						System.out.println("ayo");
 					}
 				}
 				
-				System.out.println("debug:11");
+				System.out.println("debug:12");
 				carrello.setCarrello(list);
 				session.setAttribute("carrello", carrello);
 				session.setAttribute("user", user);
-				System.out.println("debug:12");
+				System.out.println("debug:13");
 				dispatcher = request.getRequestDispatcher("index.jsp");
 				System.out.println("fine if carrello presente");
 				

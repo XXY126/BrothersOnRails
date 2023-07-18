@@ -11,22 +11,6 @@
 <script src="scripts/dynamicCode.js"></script>
 </head>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var filtroBottone = document.getElementById('filtroBottone');
-      var filtri = document.getElementById('filtri');
-
-      filtroBottone.addEventListener('click', function() {
-        if (filtri.style.display === 'none') {
-          filtri.style.display = 'block';
-          filtroBottone.textContent = 'Nascondi filtri';
-        } else {
-          filtri.style.display = 'none';
-          filtroBottone.textContent = 'Mostra filtri';
-        }
-      });
-    });
-</script>
 
 	<script>
 		$(document).ready(function() {
@@ -40,7 +24,6 @@
     <main class="container mt-4">
         <div class="row">
             <div class="col-md-3">
-                <!-- Add Bootstrap Card for Filters -->
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="mb-0">Filtra Per</h5>
@@ -48,16 +31,16 @@
                     <div class="card-body">
                         <table class="table table-sm">
                             <tbody id="categorie">
-                                <!-- Categories will be dynamically added here -->
+                            <!-- Le categorie verranno caricate dinamicamente qui-->
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <button class="btn btn-primary" id="filtroBottone">Mostra filtri</button>
+                <button class="btn btn-primary">Mostra filtri</button>
             </div>
             <div class="col-md-9">
                 <div class="row" id="schedeProdotto">
-                    <!-- Product cards will be dynamically added here -->
+                    <!-- i prodotti verrano caricati dinamicamente qui -->
                 </div>
             </div>
         </div>

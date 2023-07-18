@@ -38,9 +38,8 @@ public class CatalogoServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			ArrayList<Prodotto> catalogo = new ArrayList<>();
 
-			System.out.println("debug:catalogoservlet");
+
 			ResultSet rs = ps.executeQuery();
-			System.out.println("debug: query eseguita");
 
 			while (rs.next()) {
 				String id = rs.getString("IDProdotto");

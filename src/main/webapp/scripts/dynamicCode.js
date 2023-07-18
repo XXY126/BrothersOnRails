@@ -1,56 +1,5 @@
 /*import{} from "jquery-3.7.0.js"*/
 
-function dynamicIndex(url) {
-	$.ajax({
-		url: url,
-		type: 'GET',
-		contentType: 'application/json; charset=utf-8'
-	}).done((response) => {
-		response = JSON.parse(response);
-		let contenutoHtml = "";
-
-		for (const prodotto of response) {
-			contenutoHtml += "<div class=\"scheda\">";
-			contenutoHtml += "<div class=\"nuovo\"> <h6> NUOVO </h6> </div>";
-			contenutoHtml += "<a href=\"ProductServlet?isbn=" + prodotto.isbn + "\"><img src=\"" + prodotto.img + "\"> </a>";
-			contenutoHtml += "<div class=\"info\">";
-			contenutoHtml += "<h4>" + prodotto.nome + "</h4>";
-			contenutoHtml += "<p>&#8364 " + prodotto.prezzo.toFixed(2) + "</p>";
-			contenutoHtml += "<a onclick=\"addCart(" + prodotto.quantita + ", '" + prodotto.isbn + "')\"> Carrello</a>";
-			contenutoHtml += "</div> </div>";
-		}
-
-		$("#schedeProdotto").append(contenutoHtml);
-	});
-}
-
-function dynamicCart(url) {
-	$.ajax({
-		url: url,
-		type: 'GET',
-		contentType: 'application/json; charset=utf-8'
-	}).done((response) => {
-		response = JSON.parse(response);
-		let contenutoHtml = "";
-
-		if (response.url === undefined) {
-			for (const p of response) {
-				contenutoHtml += "<tr>";
-				contenutoHtml += "<td> <button data-isbn='" + p.isbn + "'onclick=eliminaRiga(this)><img src=\"./icons/trash.ico\" class=trash></button>";
-				contenutoHtml += "<td> <img class=thumbnail src=\"" + p.img + "\"></td>";
-				contenutoHtml += "<td>" + p.nome + "</td>";
-				contenutoHtml += "<td> <p class=costo>&#8364 " + p.prezzo.toFixed(2) + "</p> </td>";
-				contenutoHtml += "<td> <h5> <input type=number min=1 max=" + p.quantita + " class=quantita onchange=totaleParziale() value=\"1\"> </h5> </td>";
-				contenutoHtml += "<td> <h5 class=totProd> totale </h5> </td>";
-				contenutoHtml += "</tr>";
-			}
-			$("#dinamico").append(contenutoHtml);
-			totaleParziale();
-		} else {
-			window.location.assign(response.url);
-		}
-	});
-}
 
 function dynamicCatalog(url) {
 	$.ajax({
@@ -98,70 +47,78 @@ function dynamicCategorie(url) {
 	});
 }
 
-function dynamicConsigliati(url) {
-	$.ajax({
-		url: url,
-		type: 'GET',
-		contentType: 'application/json; charset=utf-8'
-	}).done((response) => {
-		response = JSON.parse(response);
-		let contenutoHtml = "";
+function searchAndFilter() {
+  let input, filter, schede, product;
+  input = document.getElementById("search-input");
+  filter = input.value.toUpperCase();
+  schede = document.getElementById("schedeProdotto");
+  product = schede.querySelectorAll(".scheda");
 
-		for (const prodotto of response) {
-			contenutoHtml += "<div class=\"scheda\">";
-			contenutoHtml += "<a href=\"ProductServlet?isbn=" + prodotto.idProdotto + "\"><img src=\"" + prodotto.img + "\"> </a>";
-			contenutoHtml += "<div class=\"info\">";
-			contenutoHtml += "<h4>" + prodotto.nome + "</h4>";
-			contenutoHtml += "<p>&#8364 " + prodotto.prezzo.toFixed(2) + "</p>";
-			contenutoHtml += "<a onclick=\"addCart(" + prodotto.quantita + ", '" + prodotto.idProdotto + "')\"> Carrello</a>";
-			contenutoHtml += "</div> </div>";
-		}
+  const selectedCategories = Array.from(document.querySelectorAll('input.cat:checked')).map(input => input.value);
+  const selectedGenres = Array.from(document.querySelectorAll('input.gen:checked')).map(input => input.value);
 
-		$("#consigliati").append(contenutoHtml);
-	});
+  for (const item of product) {
+    let a = item.querySelector(".pname");
+    let textValue = a.textContent || a.innerText;
+    const prodottoCategoria = item.dataset.categoria;
+    const prodottoGenere = item.dataset.genere;
+
+    const nameMatches = textValue.toUpperCase().indexOf(filter) > -1;
+    const categoryMatches = selectedCategories.length === 0 || selectedCategories.includes(prodottoCategoria);
+    const genreMatches = selectedGenres.length === 0 || selectedGenres.includes(prodottoGenere);
+
+    if (filter && (selectedCategories.length > 0 || selectedGenres.length > 0)) {
+      // Se è presente una ricerca per nome e filtri attivi, considera solo i prodotti che corrispondono a entrambi
+      if (nameMatches && categoryMatches && genreMatches) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    } else if (filter) {
+      // Se è presente solo una ricerca per nome, considera solo i prodotti che corrispondono al nome
+      if (nameMatches) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    } else if (selectedCategories.length > 0 || selectedGenres.length > 0) {
+      // Se ci sono solo filtri attivi, considera solo i prodotti che corrispondono ai filtri
+      if (categoryMatches && genreMatches) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    } else {
+      // Se non ci sono né ricerca né filtri attivi, mostra tutti i prodotti
+      item.style.display = "";
+    }
+  }
 }
 
-function dynamicCheckOrders(url) {
-	$.ajax({
-		url: url,
-		type: 'GET',
-		contentType: 'application/json; charset=utf-8'
-	}).done((response) => {
-		response = JSON.parse(response);
-		let contenutoHtml = "";
-		let stato = "Annullato";
+  function dynamicCart(url) {
+    $.ajax({
+      url: url,
+      type: 'GET',
+      contentType: 'application/json; charset=utf-8'
+    }).done((response) => {
+      response = JSON.parse(response);
+      let contenutoHtml = "";
 
-		for (const o of response) {
-			contenutoHtml += "<tr data-utente='" + o.userId + "' data-giorno ='" + o.data + "'>";
-			contenutoHtml += "<td> <h4>" + o.data + "</h4> </td>";
-			contenutoHtml += "<td> <h4>" + o.userId + "</h4> </td>";
-			contenutoHtml += "<td> <h4>" + o.id + "</h4> </td>";
-			contenutoHtml += "<td>";
-			for (const os of o.singoli)
-				contenutoHtml += "<p>" + os.prodottoNome + "</p>";
-			contenutoHtml += "</td>";
-			contenutoHtml += "<td> &#8364 " + o.totale.toFixed(2) + "</td>";
-			if (o.stato == 1) stato = "Completato";
-			contenutoHtml += "<td>" + stato + "</td>";
-			contenutoHtml += "<td> <button onclick=\"annullaordine(this)\"> Annulla </button> </td> </tr>";
-		}
-
-		$("#container").append(contenutoHtml);
-	});
-}
-
-function dynamicModificaProdotto(url) {
-	$.ajax({
-		url: url,
-		type: 'GET',
-		contentType: 'application/json; charset=utf-8'
-	}).done((response) => {
-		response = JSON.parse(response);
-		let contenutoHtml = "<option> -seleziona un prodotto- </option>";
-
-		for (const n of response)
-			contenutoHtml += '<option>' + n + '</option>'
-
-		$("#chooseProduct").append(contenutoHtml);
-	});
-}
+      if (response.url === undefined) {
+        for (const p of response) {
+          contenutoHtml += '<tr>';
+          contenutoHtml += '<td><button data-isbn="' + p.idProdotto + '" onclick="eliminaRiga(this)"><img src="images/trash.ico" class="trash"></button></td>';
+          contenutoHtml += '<td><img class="img-thumbnail" src="' + p.img + '"></td>';
+          contenutoHtml += '<td>' + p.nome + '</td>';
+          contenutoHtml += '<td><p class="costo">&#8364 ' + p.prezzo.toFixed(2) + '</p></td>';
+          contenutoHtml += '<td><h5><input type="number" min="1" max="' + p.quantita + '" class="form-control quantita" onchange="totaleParziale()" value="1"></h5></td>';
+          contenutoHtml += '<td><h5 class="totProd">totale</h5></td>';
+          contenutoHtml += '</tr>';
+        }
+        $("#dinamico").append(contenutoHtml);
+        totaleParziale();
+      } else {
+        window.location.assign(response.url);
+      }
+    });
+  }
