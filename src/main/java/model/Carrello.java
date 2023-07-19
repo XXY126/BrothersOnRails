@@ -34,4 +34,23 @@ public class Carrello implements Serializable{
 	public void empty() {
 		list.clear();
 	}
+	
+	public void remove(Prodotto p) {
+		for(Prodotto temp : list) {
+			if(temp.getIdProdotto().equals(p.getIdProdotto())){
+				list.remove(temp);
+			}
+		}
+	}
+	
+	public void addQuantita(String idProdotto, int incremento) {
+	    list.stream()
+	        .filter(p -> p.getIdProdotto().equals(idProdotto))
+	        .forEach(p -> p.setQuantita(p.getQuantita() + incremento));
+	}
+
+	@Override
+	public String toString() {
+		return "Carrello [Id=" + Id + "]" + list.toString();
+	}
 }

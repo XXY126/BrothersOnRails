@@ -13,11 +13,11 @@ function dynamicCatalog(url) {
         for (const p of response) {
             contenutoHtml += '<div class="col-md-4 mb-4">';
             contenutoHtml += '<div class="card scheda" data-categoria="' + p.categoria + '">';
-            contenutoHtml += '<a href="ProductServlet?isbn=' + p.idProdotto + '"><img src="/BrothersOnRails/images/' + p.img + '" class="card-img-top trash"></a>';
+            contenutoHtml += '<a href="ProductServlet?idProdotto=' + p.idProdotto + '"><img src="/BrothersOnRails/images/' + p.img + '" class="card-img-top trash"></a>';
             contenutoHtml += '<div class="card-body">';
             contenutoHtml += '<h4 class="card-title pname">' + p.nome + '</h4>';
             contenutoHtml += '<p class="card-text">&#8364 ' + p.prezzo.toFixed(2) + '</p>';
-            contenutoHtml += '<a href="#" onclick="addCart(' + p.quantita + ', \'' + p.idProdotto + '\')" class="btn btn-primary">Carrello</a>';
+            contenutoHtml += '<a href="AddToCartServlet?idProdotto='+p.idProdotto+'" class="btn btn-primary">Aggiungi al carrello</a>';
             contenutoHtml += '</div>';
             contenutoHtml += '</div>';
             contenutoHtml += '</div>';
@@ -26,6 +26,15 @@ function dynamicCatalog(url) {
 
 		$("#schedeProdotto").append(contenutoHtml);
 	});
+}
+
+
+
+
+
+function addCart(quantita, id) {
+	if (quantita != 0)
+		window.location.href = "carrello.jsp?id=" + id;
 }
 
 function dynamicCategorie(url) {
@@ -101,20 +110,23 @@ function searchAndFilter() {
       type: 'GET',
       contentType: 'application/json; charset=utf-8'
     }).done((response) => {
+	window.history.pushState("object or string", "Title", "/BrothersOnRails/carrello.jsp");
       response = JSON.parse(response);
       let contenutoHtml = "";
-
       if (response.url === undefined) {
-        for (const p of response) {
-          contenutoHtml += '<tr>';
-          contenutoHtml += '<td><button data-isbn="' + p.idProdotto + '" onclick="eliminaRiga(this)"><img src="images/trash.ico" class="trash"></button></td>';
-          contenutoHtml += '<td><img class="img-thumbnail" src="' + p.img + '"></td>';
-          contenutoHtml += '<td>' + p.nome + '</td>';
-          contenutoHtml += '<td><p class="costo">&#8364 ' + p.prezzo.toFixed(2) + '</p></td>';
-          contenutoHtml += '<td><h5><input type="number" min="1" max="' + p.quantita + '" class="form-control quantita" onchange="totaleParziale()" value="1"></h5></td>';
-          contenutoHtml += '<td><h5 class="totProd">totale</h5></td>';
-          contenutoHtml += '</tr>';
-        }
+    	for (const p of response) {
+      		contenutoHtml += '<tr>';
+      		contenutoHtml += '<td><button data-id="' + p.idProdotto + '" onclick="eliminaRiga(this)" class="btn btn-danger">';
+      		contenutoHtml += 'Rimuovi';
+      		contenutoHtml += '</button></td>';
+      		contenutoHtml += '<td><img class="img-thumbnail" src="/BrothersOnRails/images/' + p.img + '"></td>';
+      		contenutoHtml += '<td>' + p.nome + '</td>';
+      		contenutoHtml += '<td><p class="costo">&#8364 ' + p.prezzo.toFixed(2) + '</p></td>';
+      		contenutoHtml += '<td><h5><input type="number" min="1" class="form-control quantita" value="' + p.quantita + '"></h5></td>';
+      		contenutoHtml += '<td><h5 class="totProd">totale</h5></td>';
+      		contenutoHtml += '<td><a href="#" onclick="eliminaRiga(this)"><i class="fas fa-trash-alt fa-lg"></i></a></td>';
+      		contenutoHtml += '</tr>';
+    	}
         $("#dinamico").append(contenutoHtml);
         totaleParziale();
       } else {
@@ -122,3 +134,25 @@ function searchAndFilter() {
       }
     });
   }
+  
+  function eliminaRiga(button) {
+	let row = button.parentNode.parentNode;
+	let idProdotto = button.getAttribute("data-id");
+	let pathArray = window.location.pathname.split('/');
+	let contextPath = '/' + pathArray[1];
+	let url = contextPath + "/RimuoviProdotto";
+
+	$.ajax({
+		url: url,
+		type: 'POST',
+		data: { idProdotto: idProdotto },
+		success: function(response) {
+			// Rimuovi la riga del prodotto dal carrello nell'interfaccia utente
+			row.parentNode.removeChild(row);
+			
+		},
+		error: function(xhr, status, error) {
+			console.error(error);
+		}
+	});
+}

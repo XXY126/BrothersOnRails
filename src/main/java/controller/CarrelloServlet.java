@@ -34,11 +34,12 @@ public class CarrelloServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
-		String isbn = request.getParameter("isbn");
+		String id = request.getParameter("id");
 		Utente user = (Utente) session.getAttribute("user");
 		Gson json = new Gson();
-		System.out.println(isbn);
+		System.out.println(id);
 		System.out.println(user.getEmail());
+		
 		
 		String query = "SELECT * FROM carrello WHERE id_utente = ?";
 
@@ -72,7 +73,7 @@ public class CarrelloServlet extends HttpServlet {
 				*/
 				
 				/*
-				ps.setString(1, isbn);
+				ps.setString(1, id);
 				
 				
 				if (rs.next()) {
@@ -82,7 +83,7 @@ public class CarrelloServlet extends HttpServlet {
 					String categoria = rs.getString("categoria_nome");
 					quantita = rs.getInt("quantita");
 					double prezzo = rs.getDouble("prezzo");
-					Prodotto prodotto = new Prodotto(isbn, nome, descrizione, img, categoria, quantita, prezzo);
+					Prodotto prodotto = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
 
 					// controlla che ci sia solo una ripetizione per ogni prodotto 
 					int flag = 0;
@@ -101,8 +102,10 @@ public class CarrelloServlet extends HttpServlet {
 				//}
 				
 				//rs.close();
+				
 				carrello.toString();
 				out.write(json.toJson(carrello.getCarrello()));
+				System.out.println("fine servlet Carrello");
 			//}
 
 		} catch (SQLException e) {
