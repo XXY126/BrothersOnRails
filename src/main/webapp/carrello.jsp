@@ -55,6 +55,25 @@
     </div>
   </section>
 </main>
+<script>
+function checkout(url) {
+	let element = document.getElementsByClassName("totCumul")[0];
+	let text = element.textContent;
+	let numericValue = parseFloat(text.split(' ')[1]);
+
+	let query = document.querySelectorAll('.quantita');
+	let quantita = "";
+	for (let i = 0; i < query.length; i++) {
+		quantita += query[i].value;
+		if (query[i + 1] != null)
+			quantita += ",";
+	}
+
+	if (numericValue > 0)
+		window.location.href = "AddOrdineServlet?totale=" + numericValue + "&quantita=" + quantita;
+}
+</script>
+
 <jsp:include page="include/footer.jsp" flush="true"/>	
 </body>
 </html>
