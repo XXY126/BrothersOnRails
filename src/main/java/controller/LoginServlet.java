@@ -41,6 +41,8 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("debug:1");
 		System.out.println(email);
 		System.out.println(password);
+		
+		
 
 		try (Connection connection = DbManager.getConnection();
 			Statement s = connection.createStatement();
@@ -59,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 
 				query = "SELECT * FROM indirizzo WHERE id_utente =?";
 				System.out.println(query);
+				session.setAttribute("admin", false);
 				PreparedStatement ps1 = connection.prepareStatement(query);
 				ps1.setString(1, id);
 				System.out.println("debut:4");
@@ -165,18 +168,31 @@ public class LoginServlet extends HttpServlet {
 					}
 				}
 				
-				System.out.println("debug:12");
 				carrello.setCarrello(list);
 				session.setAttribute("carrello", carrello);
 				session.setAttribute("user", user);
-				System.out.println("debug:13");
+				session.setAttribute("admin", false);
 				dispatcher = request.getRequestDispatcher("index.jsp");
 				System.out.println("fine if carrello presente");
 				
 			} else {
-				System.out.println("login failed");
-				request.setAttribute("status", "failed");
-				dispatcher = request.getRequestDispatcher("login.jsp");
+				//controllo se è admin
+				query = "SELECT * FROM admin WHERE email=? AND password=?";
+				PreparedStatement pa = connection.prepareStatement(query);
+				pa.setString(1, email);
+				pa.setString(2, password);
+				ResultSet rsa = pa.executeQuery();
+				if(rsa.next()) {
+					//account loggato è un admin
+					Utente user = new Utente(rsa.getString("email"));
+					session.setAttribute("user", user);
+					session.setAttribute("admin", true);
+					dispatcher = request.getRequestDispatcher("login.jsp");
+				} else {
+					System.out.println("login failed");
+					request.setAttribute("status", "failed");
+					dispatcher = request.getRequestDispatcher("login.jsp");
+				}
 			}
 			dispatcher.forward(request, response);
 			rs.close();

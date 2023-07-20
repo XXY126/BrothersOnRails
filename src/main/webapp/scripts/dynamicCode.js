@@ -22,8 +22,6 @@ function dynamicCatalog(url) {
             contenutoHtml += '</div>';
             contenutoHtml += '</div>';
         }
-
-
 		$("#schedeProdotto").append(contenutoHtml);
 	});
 }
@@ -122,7 +120,7 @@ function searchAndFilter() {
       		contenutoHtml += '<td><img class="img-thumbnail" src="/BrothersOnRails/images/' + p.img + '"></td>';
       		contenutoHtml += '<td>' + p.nome + '</td>';
       		contenutoHtml += '<td><p class="costo">&#8364 ' + p.prezzo.toFixed(2) + '</p></td>';
-      		contenutoHtml += '<td><h5><input type="number" min="1" class="form-control quantita" value="' + p.quantita + '"></h5></td>';
+      		contenutoHtml += "<td> <h5> <input type=number min=1  class=quantita onchange=totaleParziale() value="+p.quantita+"> </h5> </td>";
       		contenutoHtml += '<td><h5 class="totProd">totale</h5></td>';
       		contenutoHtml += '<td><a href="#" onclick="eliminaRiga(this)"><i class="fas fa-trash-alt fa-lg"></i></a></td>';
       		contenutoHtml += '</tr>';
@@ -141,7 +139,6 @@ function searchAndFilter() {
 	let pathArray = window.location.pathname.split('/');
 	let contextPath = '/' + pathArray[1];
 	let url = contextPath + "/RimuoviProdotto";
-
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -149,7 +146,6 @@ function searchAndFilter() {
 		success: function(response) {
 			// Rimuovi la riga del prodotto dal carrello nell'interfaccia utente
 			row.parentNode.removeChild(row);
-			
 		},
 		error: function(xhr, status, error) {
 			console.error(error);

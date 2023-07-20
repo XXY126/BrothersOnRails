@@ -9,11 +9,17 @@ public class Utente implements Serializable{
 	private String nome;
 	private String cognome;
 	private String telefono;
+	private boolean admin = false;
 	
 	public Utente(String email, String nome, String cognome) {
 		this.email = email;
 		this.nome = nome;
 		this.cognome = cognome;
+	}
+	
+	public Utente(String email) {
+		this.email = email;
+		admin = true;
 	}
 	
 	public String getEmail() {
@@ -40,5 +46,7 @@ public class Utente implements Serializable{
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
+	public boolean getAdmin() {
+		return admin;
+	}
 }
