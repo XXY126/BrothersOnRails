@@ -45,12 +45,12 @@ public class AddOrdineServlet extends HttpServlet {
 		int address_id = -1;
 
 		try (Connection connection = DbManager.getConnection();){		
-			String query = "SELECT id FROM address WHERE id_utente = " + user.getEmail();
+			String query = "SELECT * FROM indirizzo WHERE id_utente = " + user.getEmail();
 			s = connection.createStatement();
 			ResultSet rs = s.executeQuery(query);
 
 			if (rs.next())
-				address_id = rs.getInt("id");
+				address_id = rs.getInt("id_indirizzo");
 			else {
 				request.setAttribute("status", "noAddress");
 				dispatcher = request.getRequestDispatcher("indirizzo.jsp");
@@ -66,7 +66,7 @@ public class AddOrdineServlet extends HttpServlet {
 			SecureRandom random = new SecureRandom();
 			int ordine_id = 10000 + random.nextInt(90000);
 
-			query = "INSERT INTO ordini (id, data, totale, site_user_id, stato_ordine_id, metodo_spedizione_id, address_id) values(?, ?, ?, ?, ?, ?, ?)";
+			query = "INSERT INTO ordine (id, data, totale, site_user_id, stato_ordine_id, metodo_spedizione_id, address_id) values(?, ?, ?, ?, ?, ?, ?)";
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, ordine_id);
 			ps.setDate(2, sqlDate);
