@@ -51,10 +51,14 @@ public class SignUpServlet extends HttpServlet {
 			if(rs.next()) {
 				request.setAttribute(status, "duplicato");
 				dispatcher = request.getRequestDispatcher("signup.jsp");
+				dispatcher.forward(request, response);
+				return;
 				/*response.sendRedirect("/signup.jsp");*/
 			} else if(rs3.next()){
 				request.setAttribute(status, "duplicato");
 				dispatcher = request.getRequestDispatcher("signup.jsp");
+				dispatcher.forward(request, response);
+				return;
 			}
 			else {
 				ps2.setString(1, nome);
@@ -65,7 +69,7 @@ public class SignUpServlet extends HttpServlet {
 				int rowCount = 0;
 				
 				rowCount = ps2.executeUpdate();
-				dispatcher = request.getRequestDispatcher("login.jsp");
+				dispatcher = request.getRequestDispatcher("index.jsp");
 				if (rowCount > 0) {
 					request.setAttribute(status, "success");
 				} else {
@@ -73,10 +77,9 @@ public class SignUpServlet extends HttpServlet {
 				}
 				/*response.sendRedirect("/login.jsp");*/
 			}
-			dispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/index.jsp");
+			return;
 		} catch (SQLException e) {
-			logger.log(Level.ALL, error, e);
-		} catch (ServletException e) {
 			logger.log(Level.ALL, error, e);
 		} catch (IOException e) {
 			logger.log(Level.ALL, error, e);

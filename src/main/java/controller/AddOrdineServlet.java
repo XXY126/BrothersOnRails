@@ -43,7 +43,7 @@ public class AddOrdineServlet extends HttpServlet {
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
 		PrintWriter out = response.getWriter();
 		String totale = request.getParameter("totale");
-		
+		String status = "status";
 		int address_id = -1;
 
 		try (Connection connection = DbManager.getConnection();){		
@@ -70,7 +70,10 @@ public class AddOrdineServlet extends HttpServlet {
 						return;
 					}
 				}else {
-					//errore
+					request.setAttribute(status, "failed");
+					dispatcher = request.getRequestDispatcher("carrello.jsp");
+					dispatcher.forward(request, response);
+					return;
 				}
 			}
 			query="SELECT * FROM indirizzo where id_utente = ?";
@@ -84,7 +87,9 @@ public class AddOrdineServlet extends HttpServlet {
 			}else {
 				System.out.println("debug AddOrdine: errore indirizzo");
 				out.print("errore indirizzo");
-				response.sendRedirect(request.getContextPath()+"/indirizzo.jsp");
+				request.setAttribute(status, "NoIndirizzo");
+				dispatcher = request.getRequestDispatcher("indirizzo.jsp");
+				dispatcher.forward(request, response);
 				return;
 			}
 			System.out.println("debug AddOrdine: out if else indirizzo");
@@ -163,8 +168,11 @@ public class AddOrdineServlet extends HttpServlet {
 			
 			carrello.empty();
 			session.setAttribute("carrello", carrello);
-			dispatcher = request.getRequestDispatcher("profilo.jsp");
+			request.setAttribute(status, "success");
+			dispatcher = request.getRequestDispatcher("carrello.jsp");
 			dispatcher.forward(request, response);
+			
+			
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
 		} catch (ServletException e) {

@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
+<input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+
+<%String status = (String) request.getAttribute("status");%>
+<script type ="text/javascript">
+	if('<%= status %>' == 'success'){
+		Swal.fire("Congratulazione!", "Account creato correttamente!", "success");
+	}else if('<%= status %>' == 'NoIndirizzo'){
+		Swal.fire("Spiacente!", "Deve prima impostare un indirizzo","error");
+	}
+</script>
 
 <head>
     <title>Indirizzo</title>

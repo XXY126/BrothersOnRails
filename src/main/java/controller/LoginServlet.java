@@ -133,10 +133,11 @@ public class LoginServlet extends HttpServlet {
 				
 				System.out.println("debug:9");
 				
-				ArrayList<Prodotto> list = (ArrayList<Prodotto>) carrello.getCarrello();
+				ArrayList<Prodotto> list =(ArrayList<Prodotto>) carrello.getCarrello();
 				ArrayList<String> idProdottoList = new ArrayList<>();
+				
+				System.out.println("debug99");
 				while(rs5.next()) {
-					
 					String id_prodotto = rs5.getString("id_prodotto");
 					System.out.println("id prodotto = "+id_prodotto);
 					idProdottoList.add(id_prodotto);

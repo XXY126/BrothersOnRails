@@ -7,6 +7,17 @@
 <jsp:include page="include/head.jsp" flush="true"/>
 <body>
 	<jsp:include page="include/header.jsp" flush="true"/>
+	<input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+<%String status = (String) request.getAttribute("status");%>
+<script type ="text/javascript">
+	if('<%= status %>' == 'success'){
+		Swal.fire("Congratulazione!", "ORDINE FINALIZZATO!", "success");
+	}else if('<%= status %>' == 'failed'){
+		Swal.fire("Spiacente!", "ERRORE FINALIZZAZIONE ORDINE","error");
+	}
+</script>
 	<script src="scripts/carrello.js"></script>
 	<script src="scripts/dynamicCode.js"></script>
 	<script>

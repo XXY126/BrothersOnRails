@@ -38,4 +38,17 @@
     </div>
 </div>
 
+<%String status = (String) request.getAttribute("status");%>
+<script type ="text/javascript">
+	if('<%= status %>' == 'failed'){
+		Swal.fire("Spiacente!", "Deve inserire un indirizzo", "error");
+	}
+	window.onload = function() {
+	    if(!window.location.hash) {
+	        window.location = window.location + '#loaded';
+	        window.location.reload();
+	    }
+	}
+</script>
+
 <jsp:include page="include/footer.jsp" />

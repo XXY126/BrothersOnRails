@@ -6,10 +6,6 @@
 </head>
 <body>
 <%@include file="include/header.jsp" %>
-
-
-
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
@@ -47,17 +43,12 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" minlength="8" required>
           </div>
-          <div class="form-group">
-            <label for="confirmPassword">Conferma password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-          </div>
           <button type="submit" class="btn btn-danger btn-block">Registrati</button>
           <p class="text-center mt-3">Sei già iscritto? <a href="login.jsp">Accedi qui</a></p>
         </form>
       </div>
     </div>
   </div>
-
 
 <%@include file="include/footer.jsp" %>
 </body>

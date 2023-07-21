@@ -44,7 +44,6 @@ public class AddToCart extends HttpServlet {
 		Carrello carrello = (Carrello) session.getAttribute("carrello");
 		
 		System.out.println("stampa carrello");
-		carrello.toString();
 		String query = "SELECT * FROM carrello where id_utente =?";
 		System.out.println("debug: id_prodotto="+id_prodotto);
 		
