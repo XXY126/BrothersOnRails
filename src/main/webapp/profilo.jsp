@@ -38,7 +38,7 @@ if (user == null) {
                         Ordini
                     </div>
                     <div class="card-body text-center">
-                        <a class="btn btn-primary" href="ordini.jsp">Visuallzza Ordini</a>
+                        <a class="btn btn-primary" href="OrdiniServlet">Visuallzza Ordini</a>
                     </div>
                 </div>
             </div>
@@ -84,6 +84,40 @@ if (user == null) {
             </div>
         </div>
     </div>
+    
+<script>
+    // Verifica se è presente il parametro nel URL
+    function getUrlParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Funzione per creare e mostrare l'alert Bootstrap
+    function showAlert(message) {
+        const alertDiv = document.createElement("div");
+        alertDiv.classList.add("alert", "alert-danger", "my-3");
+        alertDiv.textContent = message;
+
+        const closeButton = document.createElement("button");
+        closeButton.classList.add("btn-close");
+        closeButton.setAttribute("data-bs-dismiss", "alert");
+        alertDiv.appendChild(closeButton);
+
+        const container = document.querySelector(".container");
+        container.insertBefore(alertDiv, container.firstChild);
+    }
+
+    // Attendi che il documento HTML sia completamente caricato prima di eseguire lo script
+    document.addEventListener("DOMContentLoaded", function () {
+        // Controlla se è presente il parametro "errore indirizzo" nel URL
+        const errorMessage = getUrlParam('errore');
+
+        // Se il parametro "errore indirizzo" è presente, mostra l'alert
+        if (errorMessage && errorMessage === "indirizzo") {
+            showAlert("aggiungere un indirizzo");
+        }
+    });
+</script>
 
     <jsp:include page="include/footer.jsp" flush="true" />
 </body>

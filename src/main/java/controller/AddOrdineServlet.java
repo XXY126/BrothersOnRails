@@ -66,8 +66,8 @@ public class AddOrdineServlet extends HttpServlet {
 					System.out.println("rs.getIntQuantita = " + rs.getInt("quantita"));
 					if(p.getQuantita()>rs.getInt("quantita")) {
 						out.print("errore quantita");
-						dispatcher = request.getRequestDispatcher("profilo.jsp");
-						dispatcher.forward(request, response);
+						response.sendRedirect(request.getContextPath()+"/carrello.jsp");
+						return;
 					}
 				}else {
 					//errore
@@ -84,12 +84,10 @@ public class AddOrdineServlet extends HttpServlet {
 			}else {
 				System.out.println("debug AddOrdine: errore indirizzo");
 				out.print("errore indirizzo");
-				dispatcher = request.getRequestDispatcher("profilo.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect(request.getContextPath()+"/indirizzo.jsp");
+				return;
 			}
-			
-			
-			
+			System.out.println("debug AddOrdine: out if else indirizzo");
 			//INSERT DELL'ORDINE
 			query = "INSERT INTO ordine (totale, varData, id_utente, id_indirizzo) VALUES(?, ?, ?, ?)";
 			
