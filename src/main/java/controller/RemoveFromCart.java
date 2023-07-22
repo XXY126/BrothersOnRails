@@ -59,7 +59,7 @@ public class RemoveFromCart extends HttpServlet {
 				}
 			}else return;
 		}
-		
+    	request.setAttribute("statusRemove", "success");
 		dispatcher = request.getRequestDispatcher("carrello.jsp");
 		
 		carrello.setCarrello(list);

@@ -172,6 +172,7 @@ public class LoginServlet extends HttpServlet {
 				carrello.setCarrello(list);
 				session.setAttribute("carrello", carrello);
 				session.setAttribute("user", user);
+				request.setAttribute("status", "success");
 				session.setAttribute("admin", false);
 				dispatcher = request.getRequestDispatcher("index.jsp");
 				System.out.println("fine if carrello presente");

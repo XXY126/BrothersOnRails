@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,8 +57,9 @@ public class ModificaProdottoServlet extends HttpServlet {
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
 		}
-
-        response.sendRedirect("index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+		request.setAttribute("statusRemove", "modifica");
+        response.sendRedirect("CatalogoServlet");
     }
 
 }

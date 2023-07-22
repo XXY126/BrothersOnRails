@@ -13,8 +13,19 @@
     <title>Amministratore - Catalogo Prodotti</title>
     <%@include file="include/head.jsp" %>
 </head>
+
 <body>
-	<%@include file="include/header.jsp" %>
+<%@include file="include/header.jsp" %>
+<input type="hidden" id="statusRemove" value="<%= request.getAttribute("statusRemove")%>">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<%String statusRemove = (String) request.getAttribute("statusRemove");%>
+<script type ="text/javascript">
+
+	if('<%= statusRemove %>' == 'success')
+		Swal.fire("Ottimo!", "ELIMINAZIONE PRODOTTO ANDATA A BUON FINE!", "success");
+	else if('<%= statusRemove %>' == 'modifica')
+			Swal.fire("Ottimo!", "MODIFICA SALVATA!", "success");
+</script>
     <div class="container mt-4">
         <h1>Amministratore - Catalogo Prodotti</h1>
         

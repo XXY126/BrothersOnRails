@@ -6,6 +6,18 @@
   <link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
+<input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+<%String status = (String) request.getAttribute("status");%>
+<script type ="text/javascript">
+	if('<%= status %>' == 'success'){
+		Swal.fire("Benvenuto!", "Accesso avvenuto con successo", "success");
+	} else if('<%= status %>' == 'logout'){
+		Swal.fire("LogOut", "LogOut avvenuto con successo", "success");
+	}
+</script>
+
 
 <!-- Includo l'header, la barra superiore di ricerca -->
 <%@include file="include/header.jsp"%>

@@ -15,12 +15,10 @@
 <%String statusAggiunta = (String) request.getAttribute("statusAggiunta");%>
 <script type ="text/javascript">
 
-	if('<%= statusAggiunta %>' != null){
-		if('<%= statusAggiunta %>' == 'failed'){
+		if('<%= statusAggiunta %>' == 'failed')
 			Swal.fire("Spiacente!", "ERRORE DURANTE AGGIUNTA PRODOTTO", "error");
-		} else {
-			Swal.fire("SUCCESSO!", "L'AGGIUNTA DEL PRODOTTO HA AVUTO SUCCESSO", "success");
-		}
+		else if('<%= statusAggiunta %>' == 'success')
+				Swal.fire("Ottimo!", "AGGIUNTA DEL PRODOTTO ANDATA A BUON FINE", "success");
 	}
 	
 </script>
