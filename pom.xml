@@ -69,7 +69,9 @@
   </build>
   
   <properties>
+	<maven.compiler.target>17</maven.compiler.target>
   <sonar.organization>xuxinyu</sonar.organization>
   <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  
   </properties>
 </project>
