@@ -66,14 +66,18 @@ public class CatalogoServlet extends HttpServlet {
 			}
 			
 			if((boolean)session.getAttribute("admin")==true) {
+				System.out.println("debug catalogo servlet: admin = true");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("catalogoAdmin.jsp");
 				request.setAttribute("catalogo", catalogo);
 				dispatcher.forward(request, response);
+			}else {
+				System.out.println("debug catalogo servlet: lmao");
+				out.write(json.toJson(catalogo));
+				rs.close();
 			}
 			
-			System.out.println("lmao");
-			out.write(json.toJson(catalogo));
-			rs.close();
+			
+
 			
 
 		} catch (SQLException e) {
