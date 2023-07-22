@@ -21,9 +21,11 @@
                 <label for="descrizione" class="form-label">Descrizione:</label>
                 <input type="text" class="form-control" name="descrizione" value="${param.descrizione}" />
             </div>
-            <div class="mb-3">
-                <label for="categoria" class="form-label">Categoria:</label>
-                <input type="text" class="form-control" name="categoria" value="${param.categoria}" />
+            <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <select class="form-control" id="categoria" name="categoria" required>
+                <option value="${prodotto.categoria}" selected>Seleziona una categoria</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="quantita" class="form-label">Quantità:</label>
@@ -78,6 +80,27 @@
             // Procedi con l'invio del form se ci sono state modifiche
             return true;
         }
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            // Carica dinamicamente le categorie nel menu a tendina "categoria" utilizzando la servlet "CategoriaServlet"
+            fetch('CategoriaServlet')
+                .then(response => response.json())
+                .then(categorie => {
+                    const categoriaSelect = document.getElementById('categoria');
+                    categorie.forEach(categoria => {
+                        const option = document.createElement('option');
+                        option.value = categoria;
+                        option.textContent = categoria;
+                        categoriaSelect.appendChild(option);
+
+                        // Imposta l'opzione selezionata in base a "${param.categoria}"
+                        if (categoria === "${param.categoria}") {
+                            option.selected = true;
+                        }
+                    });
+                })
+                .catch(error => console.error(error));
+        });
     </script>
 </body>
 </html>
