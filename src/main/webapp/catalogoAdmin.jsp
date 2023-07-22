@@ -12,7 +12,6 @@
     <meta charset="UTF-8">
     <title>Amministratore - Catalogo Prodotti</title>
     <%@include file="include/head.jsp" %>
-    <link href="path_al_tuo_file_bootstrap.css" rel="stylesheet">
 </head>
 <body>
 	<%@include file="include/header.jsp" %>
@@ -36,7 +35,7 @@
                             <p class="card-text">Quantità disponibile: ${prodotto.quantita}</p>
                             <p class="card-text">Prezzo: ${prodotto.prezzo}</p>
                             
-                            <a href="elimina_prodotto?id=${prodotto.idProdotto}" class="btn btn-danger">Elimina</a>
+                            <a onclick="confirm(${prodotto.idProdotto})" class="btn btn-danger">Elimina</a>
                             <a href="modifica_prodotto?id=${prodotto.idProdotto}" class="btn btn-primary">Modifica</a>
                         </div>
                     </div>
@@ -45,5 +44,52 @@
         </c:forEach>
     </div>
     <%@include file="include/footer.jsp" %>
+<script type="text/javascript">
+    function confirm(idProdotto) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Effettua una richiesta AJAX con Fetch API
+ 				fetch('deleteProdottoServlet', {
+  					method: 'POST',
+  					headers: {
+    					'Content-Type': 'application/x-www-form-urlencoded'
+  					},
+  					body: 'idProdotto=' + encodeURIComponent(idProdotto),
+  					credentials: 'include'
+					})
+					.then(response => response.text())
+					.then(data => {
+						console.log('AAAAAAA');
+  					// Gestisci la risposta dalla servlet
+  					if (data === 'success') {
+    				// L'eliminazione è avvenuta con successo, puoi aggiornare la pagina
+    					console.log('Prodotto eliminato con successo');
+    					location.reload(); // Ricarica la pagina dopo l'eliminazione
+  					} else {
+    				// Si è verificato un errore durante l'eliminazione del prodotto
+    					console.log('Errore durante l\'eliminazione del prodotto');
+  					}
+					})
+					.catch(error => console.error(error));
+
+
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                );
+            }
+        });
+    }
+</script>
+
 </body>
 </html>
