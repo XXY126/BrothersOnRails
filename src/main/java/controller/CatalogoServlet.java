@@ -11,11 +11,13 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -52,8 +54,28 @@ public class CatalogoServlet extends HttpServlet {
 				Prodotto p = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
 				catalogo.add(p);
 			}
+			
+			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("user")==null){
+				System.out.println("no user");
+				out.write(json.toJson(catalogo));
+				rs.close();
+				return;
+			}
+			
+			if((boolean)session.getAttribute("admin")==true) {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("catalogoAdmin.jsp");
+				request.setAttribute("catalogo", catalogo);
+				dispatcher.forward(request, response);
+			}
+			
+			System.out.println("lmao");
 			out.write(json.toJson(catalogo));
 			rs.close();
+			
+
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
 		} catch (IOException e) {

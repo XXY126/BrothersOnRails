@@ -23,7 +23,7 @@
         	<a class="btn btn-danger" href="/BrothersOnRails/login.jsp" role="button">LogIn</a>
         	<a class="btn btn-danger" href="/BrothersOnRails/carrello.jsp" role="button">Carrello</a>
         <%} else { if(user.getAdmin()==true){%>
-        	<a class="btn btn-danger" href="/BrothersOnRails/catalogoAdmin.jsp" role="button">AdminCatalogo</a>
+        	<a class="btn btn-danger" href="/BrothersOnRails/CatalogoServlet" role="button">AdminCatalogo</a>
         	<a class="btn btn-danger" href="/BrothersOnRails/AdminOrdiniServlet" role="button">AdminOrdini</a>
         	<a class="btn btn-danger" href="/BrothersOnRails/LogOutServlet" role="button">LogOut</a>
         	<%}else{ %>
