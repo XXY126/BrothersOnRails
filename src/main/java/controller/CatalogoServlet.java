@@ -44,15 +44,17 @@ public class CatalogoServlet extends HttpServlet {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String id = rs.getString("IDProdotto");
-				String nome = rs.getString("nome");
-				String descrizione = rs.getString("descrizione");
-				String img = rs.getString("img");
-				String categoria = rs.getString("id_categoria");
-				int quantita = rs.getInt("quantita");
-				double prezzo = rs.getDouble("costo");
-				Prodotto p = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
-				catalogo.add(p);
+				if(rs.getBoolean("eliminato")==false) {
+					String id = rs.getString("IDProdotto");
+					String nome = rs.getString("nome");
+					String descrizione = rs.getString("descrizione");
+					String img = rs.getString("img");
+					String categoria = rs.getString("id_categoria");
+					int quantita = rs.getInt("quantita");
+					double prezzo = rs.getDouble("costo");
+					Prodotto p = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
+					catalogo.add(p);
+				}
 			}
 			
 			
@@ -77,9 +79,6 @@ public class CatalogoServlet extends HttpServlet {
 			}
 			
 			
-
-			
-
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
 		} catch (IOException e) {

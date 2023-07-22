@@ -39,7 +39,7 @@ public class deleteProdottoServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String idProdotto = request.getParameter("idProdotto");
-		String query = "DELETE FROM prodotto WHERE IDProdotto = ?";
+		String query = "UPDATE prodotto SET eliminato = '1' WHERE IDProdotto = ?";
 
 		try (Connection connection = DbManager.getConnection();){	
 			PreparedStatement ps = connection.prepareStatement(query);

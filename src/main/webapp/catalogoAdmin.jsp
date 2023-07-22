@@ -36,7 +36,7 @@
                             <p class="card-text">Prezzo: ${prodotto.prezzo}</p>
                             
                             <a onclick="confirm(${prodotto.idProdotto})" class="btn btn-danger">Elimina</a>
-                            <a href="modifica_prodotto?id=${prodotto.idProdotto}" class="btn btn-primary">Modifica</a>
+                            <a href="modificaProdotto.jsp?id=${prodotto.idProdotto}&descrizione=${prodotto.descrizione}&categoria=${prodotto.categoria}&quantita=${prodotto.quantita}&prezzo=${prodotto.prezzo}&img=${prodotto.img}" class="btn btn-primary">Modifica</a>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,6 @@
   					if (data === 'success') {
     				// L'eliminazione è avvenuta con successo, puoi aggiornare la pagina
     					console.log('Prodotto eliminato con successo');
-    					location.reload(); // Ricarica la pagina dopo l'eliminazione
   					} else {
     				// Si è verificato un errore durante l'eliminazione del prodotto
     					console.log('Errore durante l\'eliminazione del prodotto');
@@ -85,7 +84,9 @@
                     'Deleted!',
                     'Your file has been deleted.',
                     'success'
-                );
+                ).then(function(){
+					location.reload(); // Ricarica la pagina dopo l'eliminazione
+                });
             }
         });
     }

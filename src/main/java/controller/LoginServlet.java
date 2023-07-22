@@ -188,6 +188,7 @@ public class LoginServlet extends HttpServlet {
 					Utente user = new Utente(rsa.getString("email"));
 					session.setAttribute("user", user);
 					session.setAttribute("admin", true);
+					request.setAttribute("status", "failed");
 					dispatcher = request.getRequestDispatcher("index.jsp");
 				} else {
 					System.out.println("login failed");
