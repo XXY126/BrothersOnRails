@@ -4,8 +4,10 @@
 <%@ page import="java.util.*,model.OrdineSingolo"%>
 <% 
     Utente user = (Utente) session.getAttribute("user");
-    if(user == null)
+    if(user == null){
         response.sendRedirect("login.jsp");
+        return;
+        }
 %>
 <jsp:include page="include/head.jsp" flush="true"/>
 <script>

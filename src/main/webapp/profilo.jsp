@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page import="java.util.*, model.Utente" %>
- <% if(session.getAttribute("user")==null)
-		response.sendRedirect("login.jsp");
- %>
+
 <%
 Utente user = (Utente) session.getAttribute("user");
 int flag = 0;
 if (user == null) {
-    response.sendRedirect("login.jsp");
+ 	request.setAttribute("statusCarrello", "profilo");
+	RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+	dispatcher.forward(request, response);
 } else if (user.getAdmin()) {
     flag = 1;
 }
 %>
+
 <jsp:include page="include/head.jsp" flush="true" />
 
 <body>

@@ -41,6 +41,11 @@ public class OrdiniServlet extends HttpServlet {
 		String filter = request.getParameter("filtro");
 		RequestDispatcher dispatcher = null;
 		
+		if(user==null) {
+			response.sendRedirect("ordini.jsp");
+			return;
+		}
+		
 		if(filter!=null) {
 			if(filter.equals(new String("tutto"))) {
 				dispatcher = request.getRequestDispatcher("AdminOrdiniServlet");

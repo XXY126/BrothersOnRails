@@ -1,16 +1,108 @@
-@charset "UTF-8";
+/* Linear gradient chiaro della palette per il background della pagina */
+body {
+    background: linear-gradient(135deg, #E6E6E6, #6699FF); /* Bianco al Blu */
+}
 
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #ff0000 !important;
-    }
+/* Resto del codice CSS esistente */
 
-    .product-row {
-      padding: 40px 0;
-      background-color: #f9f9f9;
-    }
-        /* Stile personalizzato per il Carousel */
-    .carousel {
-      width: 100%; /* Imposta la larghezza desiderata */
-      height: 50%; /* Imposta l'altezza desiderata */
-    }
-    
+/* Personalizza lo stile del pulsante Carrello con sfumatura rossa */
+.navbar-nav .nav-link.carrello {
+    background: linear-gradient(45deg, #FF0000, #FF6666); /* Rosso */
+    color: #FFFFFF; /* Testo bianco */
+}
+
+/* Personalizza lo stile del pulsante Login con sfumatura blu */
+.navbar-nav .nav-link.login {
+    background: linear-gradient(45deg, #0000FF, #6699FF); /* Blu */
+    color: #FFFFFF; /* Testo bianco */
+}
+
+/* Personalizza lo stile del pulsante Catalogo con sfumatura bianca */
+.navbar-nav .nav-link.catalogo {
+    background: linear-gradient(45deg, #FFFFFF, #E6E6E6); /* Bianco */
+    color: #000000; /* Testo nero */
+}
+
+.carousel-inner .carousel-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5); /* OpacitÃ  0.5 (50%) del nero */
+}
+
+/* Stile del testo sopra lo slider */
+.carousel-inner .carousel-caption h3 {
+    color: #FFFFFF; /* Testo bianco */
+    font-size: 24px;
+}
+
+/* Immagini a dimensione fissa nel carousel */
+.carousel-inner .carousel-item img {
+    width: 100vw; /* Larghezza fissa */
+    height: 100vh; /* Altezza fissa */
+    object-fit: cover;
+}
+
+footer {
+    background-color: #f5f5f5; /* Colore di sfondo del footer */
+    text-align: center;
+}
+
+/* Aggiungi stile al parallax-section */
+.parallax-section {
+    position: relative;
+    height: 100vh; /* Regola l'altezza del parallax container */
+    overflow: hidden;
+}
+
+.parallax-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/treno4.jpg'); /* Imposta il percorso corretto dell'immagine di sfondo */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transform: translateZ(0); /* Per abilitare l'effetto parallax */
+}
+
+.parallax-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.prod
+{
+	    color: black;
+}
+
+#pablo {
+    height: 70vh; /* Imposta l'altezza del contenitore delle cards in 70% della viewport height */
+    overflow-y: auto; /* Abilita lo scrolling verticale solo se necessario */
+}
+
+.card {
+	color: black;
+    max-height: 500px; /* Imposta l'altezza massima delle cards a 300px per evitare che superino l'altezza del contenitore */
+	box-shadow: 0 8px 16px rgba(171, 52, 40, 0.2);
+	transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(171, 52, 40, 0.8)
+}
+
+.linka:hover{
+	filter: brightness(50%);
+}

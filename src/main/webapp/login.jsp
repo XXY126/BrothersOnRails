@@ -9,13 +9,14 @@
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
 <%String status = (String) request.getAttribute("status");%>
 <%String statusCarrello = (String) request.getAttribute("statusCarrello");%>
+<%String statusSignUp = (String) request.getAttribute("statusSignUp");%>
 <script type ="text/javascript">
-	if('<%= statusCarrello %>' == 'true'){
+	if('<%= statusCarrello %>' == 'true')
 		Swal.fire("Spiacente!", "E' obbligatoria fare l'accesso", "error");
-	}
-	if('<%= status %>' == 'failed'){
+	else if('<%= status %>' == "failed")
 		Swal.fire("Spiacente!", "Email o Password errati", "error");
-	}
+	else if(<%=status%> == "signup")
+			Swal.fire("Congratulazioni!", "Registrazione avvenuto con successo", "success");
 </script>
 
 <title>LogIn</title>

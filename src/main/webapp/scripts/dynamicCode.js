@@ -46,7 +46,7 @@ function dynamicCategorie(url) {
 		let filtriCategoria = "<tr> <td> <h4> Categoria </h4> </td> </tr>";
 		for (const categoria of response) {
 			filtriCategoria += "<tr> <td>";
-			filtriCategoria += "<input type=\"checkbox\" class=\"cat\"  value=\"" + categoria + "\"name=\"categoria\" onchange=\"searchAndFilter()\">";
+			filtriCategoria += "<input type=\"radio\" class=\"cat\"  value=\"" + categoria + "\"name=\"categoria\" onchange=\"searchAndFilter()\">";
 			filtriCategoria += "<label class=\"secondset\">" + categoria + "</label>";
 			filtriCategoria += "</td> </tr>";
 		}

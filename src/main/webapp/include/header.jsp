@@ -7,6 +7,7 @@
     
     
   </style>
+  <link rel="icon" type="image/x-icon" href="images/icon.ico">
   <%@ page import="java.util.*,model.Utente" %>
 <!-- Barra superiore -->
 <nav class="navbar navbar-light bg-light">
@@ -16,7 +17,6 @@
       <div class="col-12 col-md-8 text-right justify-content-md-start"> <!-- Modifica la classe della colonna -->
         <a class="btn btn-danger" href="/BrothersOnRails/index.jsp" role="button">Home</a>
 
-        
         <% Utente user = (Utente)session.getAttribute("user");%>
         <%if(user==null) {%>
             <a class="btn btn-danger" href="/BrothersOnRails/catalogo.jsp" role="button">Catalogo</a>
@@ -33,6 +33,4 @@
         	<a class="btn btn-danger" href="/BrothersOnRails/carrello.jsp" role="button">Carrello</a>
         <%}}%>
       </div>
-      
-      
 </nav>

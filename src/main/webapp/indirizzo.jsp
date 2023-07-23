@@ -4,7 +4,12 @@
 <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
-
+ <% if(session.getAttribute("user")==null){
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+		dispatcher.forward(request, response);
+		return;
+ }
+ %>
 <%String status = (String) request.getAttribute("status");%>
 <script type ="text/javascript">
 	if('<%= status %>' == 'success'){

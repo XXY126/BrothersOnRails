@@ -71,13 +71,15 @@ public class SignUpServlet extends HttpServlet {
 				rowCount = ps2.executeUpdate();
 				dispatcher = request.getRequestDispatcher("index.jsp");
 				if (rowCount > 0) {
-					request.setAttribute(status, "success");
+					request.setAttribute(status, "signup");
+					dispatcher = request.getRequestDispatcher("login.jsp");
 				} else {
-					request.setAttribute(status, "failed");
+					request.setAttribute(status, "nosignup");
+					dispatcher = request.getRequestDispatcher("index.jsp");
 				}
 				/*response.sendRedirect("/login.jsp");*/
 			}
-			response.sendRedirect(request.getContextPath()+"/index.jsp");
+			dispatcher.forward(request, response);
 			return;
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
