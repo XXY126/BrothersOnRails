@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
  <%@ page import="java.util.*,model.Prodotto,model.Carrello"%>
- <% if(session.getAttribute("user")==null)
-		response.sendRedirect("login.jsp");
+ <% if(session.getAttribute("user")==null){
+	 	request.setAttribute("statusCarrello", "true");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+		dispatcher.forward(request, response);
+ }
  %>
 <jsp:include page="include/head.jsp" flush="true"/>
 <body>
