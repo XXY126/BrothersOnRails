@@ -20,7 +20,7 @@ public class CardsServlet extends HttpServlet {
 
         try (Connection conn = DbManager.getConnection();){            
             // Esegui la query per ottenere i dati dei prodotti dalla tabella "Prodotti"
-            String query = "select * from prodotto LIMIT 4";
+            String query = "select * from prodotto LIMIT 2";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
