@@ -94,7 +94,7 @@ footer {
 
 .card {
 	color: black;
-    max-height: 500px; /* Imposta l'altezza massima delle cards a 300px per evitare che superino l'altezza del contenitore */
+    max-height: 300px; /* Imposta l'altezza massima delle cards a 300px per evitare che superino l'altezza del contenitore */
 	box-shadow: 0 8px 16px rgba(171, 52, 40, 0.2);
 	transition: box-shadow 0.3s ease;
 }

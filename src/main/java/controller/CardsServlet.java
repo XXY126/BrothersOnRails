@@ -20,7 +20,7 @@ public class CardsServlet extends HttpServlet {
 
         try (Connection conn = DbManager.getConnection();){            
             // Esegui la query per ottenere i dati dei prodotti dalla tabella "Prodotti"
-            String query = "select * from prodotto LIMIT 3";
+            String query = "select * from prodotto LIMIT 4";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
@@ -32,9 +32,9 @@ public class CardsServlet extends HttpServlet {
                 String descrizione = rs.getString("descrizione");
                 double prezzo = rs.getDouble("costo");
 
-                out.println("<div class='col-mod-4'>");
-                out.println("<div class='card mb-4'>");
-                out.println("<a class='linka' href='ProductServlet?idProdotto="+id+"'>");
+                out.println("<div class='col-md-5'>");
+                out.println("<div class='card mb-6'>");
+                out.println("<a class='linka' href='ProductServlet?idProdotto=" + id + "'>");
                 out.println("<img src='images/" + immagine + "' class='card-img-top' alt='" + nomeProdotto + "'>");
                 out.println("</a>");
                 out.println("<div class='card-body'>");
@@ -44,6 +44,7 @@ public class CardsServlet extends HttpServlet {
                 out.println("</div>");
                 out.println("</div>");
                 out.println("</div>");
+
             }
             System.out.println("debug");
             // Chiudi le risorse
