@@ -116,8 +116,8 @@ public class LoginServlet extends HttpServlet {
 					ps4.setString(1, id);
 					ResultSet rs4 = ps4.executeQuery();
 					
-					if(rs.next()) {
-						 carrelloid = rs.getString("id_carrello");
+					if(rs4.next()) {
+						 carrelloid = rs4.getString("id_carrello");
 						 carrello = new Carrello(carrelloid);
 					}
 				}
