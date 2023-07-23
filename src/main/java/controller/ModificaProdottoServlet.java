@@ -29,7 +29,8 @@ public class ModificaProdottoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	
+    	RequestDispatcher dispatcher = null;
         String idProdotto = request.getParameter("idProdotto");
         String descrizione = request.getParameter("descrizione");
         String categoria = request.getParameter("categoria");
@@ -57,9 +58,10 @@ public class ModificaProdottoServlet extends HttpServlet {
 		} catch (SQLException e) {
 			logger.log(Level.ALL, error, e);
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+		
 		request.setAttribute("statusRemove", "modifica");
-        response.sendRedirect("CatalogoServlet");
+		dispatcher = request.getRequestDispatcher("CatalogoServlet");
+        dispatcher.forward(request, response);
     }
 
 }

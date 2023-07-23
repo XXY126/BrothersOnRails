@@ -38,7 +38,19 @@ public class OrdiniServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utente user = (Utente) session.getAttribute("user");
+		String filter = request.getParameter("filtro");
 		RequestDispatcher dispatcher = null;
+		
+		if(filter!=null) {
+			if(filter.equals(new String("tutto"))) {
+				dispatcher = request.getRequestDispatcher("AdminOrdiniServlet");
+				dispatcher.forward(request, response);
+				return;
+			} else {
+				user.setEmail(filter);
+			}
+		}
+		
 
 		try (Connection connection = DbManager.getConnection();
 			Statement s = connection.createStatement();){
@@ -78,6 +90,28 @@ public class OrdiniServlet extends HttpServlet {
 				ordini.add(o);
 			}
 			System.out.println("deubg ordiniServlet fine");
+			
+			if(filter!=null) {
+				
+				if(filter.equals(new String("tutto"))) {
+					System.out.println("tutto");
+				}
+				else {
+					if(ordini.getOrdiniList().isEmpty()) {
+						request.setAttribute("statoOrdiniView", "vuoto");
+						session.setAttribute("ordini", ordini);
+						dispatcher = request.getRequestDispatcher("adminordini.jsp");
+						dispatcher.forward(request, response);
+						return;
+					} else{
+						request.setAttribute("statoOrdiniView", "success");
+						session.setAttribute("ordini", ordini);
+						dispatcher = request.getRequestDispatcher("adminordini.jsp");
+						dispatcher.forward(request, response);
+						return;
+					}
+				}
+			}
 			
 			session.setAttribute("ordini", ordini);
 			dispatcher = request.getRequestDispatcher("ordini.jsp");

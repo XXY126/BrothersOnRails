@@ -51,7 +51,8 @@ public class AdminOrdiniServlet extends HttpServlet {
 			System.out.println("degub ordiniservlet "+ query+ " eseguita");
 			
 			while(rs.next()) {
-				Ordine o = new Ordine(rs.getInt("id_ordine"),rs.getTimestamp("varData"), rs.getDouble("totale"), user.getEmail(), rs.getInt("id_indirizzo"));
+				System.out.println(rs.getString("id_utente"));
+				Ordine o = new Ordine(rs.getInt("id_ordine"),rs.getTimestamp("varData"), rs.getDouble("totale"), rs.getString("id_utente"), rs.getInt("id_indirizzo"));
 				query="SELECT * FROM popola WHERE id_ordine = ?";
 				
 				PreparedStatement ps1 = connection.prepareStatement(query);

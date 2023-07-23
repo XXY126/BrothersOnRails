@@ -82,6 +82,8 @@ function checkout(url) {
 
 	if (numericValue > 0)
 		window.location.href = "AddOrdineServlet?totale=" + numericValue + "&quantita=" + quantita;
+	else 
+		Swal.fire("Spiacente!", "Carrello vuoto", "error");
 }
 </script>
 

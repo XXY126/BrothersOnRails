@@ -47,6 +47,11 @@ public class AddToCart extends HttpServlet {
 		String query = "SELECT * FROM carrello where id_utente =?";
 		System.out.println("debug: id_prodotto="+id_prodotto);
 		
+		if(user==null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		
 		try (Connection connection = DbManager.getConnection();
 				Statement s = connection.createStatement();
 				PreparedStatement ps = connection.prepareStatement(query);){
@@ -54,8 +59,6 @@ public class AddToCart extends HttpServlet {
 				ResultSet rs = ps.executeQuery();
 				
 				if(rs.next()) {
-					//TODO GESTIRE QUANDO IL PRODOTTO E' GIA PRESENTE NEL CARRELLO, INCREMENTARE LA QUANTITA
-					//TODO GESTIRE QUANDO LA QUANTITA E' POSSIBILE IMPOSTARLO
 					
 					String id_carrello = rs.getString("id_carrello");
 					

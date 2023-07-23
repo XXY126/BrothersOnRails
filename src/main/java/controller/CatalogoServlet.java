@@ -85,4 +85,57 @@ public class CatalogoServlet extends HttpServlet {
 			logger.log(Level.ALL, error, e);
 		}
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Gson json = new Gson();
+
+		try (Connection connection = DbManager.getConnection();
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM prodotto");) {
+			PrintWriter out = response.getWriter();
+			ArrayList<Prodotto> catalogo = new ArrayList<>();
+
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				if(rs.getBoolean("eliminato")==false) {
+					String id = rs.getString("IDProdotto");
+					String nome = rs.getString("nome");
+					String descrizione = rs.getString("descrizione");
+					String img = rs.getString("img");
+					String categoria = rs.getString("id_categoria");
+					int quantita = rs.getInt("quantita");
+					double prezzo = rs.getDouble("costo");
+					Prodotto p = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
+					catalogo.add(p);
+				}
+			}
+			
+			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("user")==null){
+				System.out.println("no user");
+				out.write(json.toJson(catalogo));
+				rs.close();
+				return;
+			}
+			if((boolean)session.getAttribute("admin")==true) {
+				System.out.println("debug catalogo servlet: admin = true");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("catalogoAdmin.jsp");
+				request.setAttribute("catalogo", catalogo);
+				dispatcher.forward(request, response);
+			}else {
+				System.out.println("debug catalogo servlet: lmao");
+				out.write(json.toJson(catalogo));
+				rs.close();
+			}
+		} catch (SQLException e) {
+			logger.log(Level.ALL, error, e);
+		} catch (IOException e) {
+			logger.log(Level.ALL, error, e);
+		}
+	}
 }

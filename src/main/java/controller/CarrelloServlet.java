@@ -48,60 +48,7 @@ public class CarrelloServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			if (user == null)
 				response.sendRedirect("login.jsp");
-			/*
-			else {
-				//Cerca il carrello dell'utente
-				ps.setString(1, user.getEmail());
-				ResultSet rs = ps.executeQuery();
-				
-				String idCarrello = rs.getString("id_carrello");
-				
-				//Cerca i prodotti presenti nel carrello
-				query = "SELECT * FROM contiene where id_carrello = ";
-				PreparedStatement ps1 = connection.prepareStatement(query);
-				ps1.setString(1, idCarrello);
-				ResultSet rs1 = ps1.executeQuery();
-				
-				String idProdotto;
-				int quantita;
-				while(rs1.next()) {
-					idProdotto = rs1.getString("id_prodotto");
-					quantita = rs1.getInt("quantita");
-					
-					
-				}
-				*/
-				
-				/*
-				ps.setString(1, id);
-				
-				
-				if (rs.next()) {
-					String nome = rs.getString("nome");
-					String descrizione = rs.getString("descrizione");
-					String img = rs.getString("immagine_prod");
-					String categoria = rs.getString("categoria_nome");
-					quantita = rs.getInt("quantita");
-					double prezzo = rs.getDouble("prezzo");
-					Prodotto prodotto = new Prodotto(id, nome, descrizione, img, categoria, quantita, prezzo);
-
-					// controlla che ci sia solo una ripetizione per ogni prodotto 
-					int flag = 0;
-					for (Prodotto p : carrello.getCarrello()) {
-						if (prodotto.getIdProdotto().equals(p.getIdProdotto()))
-							flag = 1;
-					}
-					
-					
-
-					if (flag == 0) {
-						carrello.add(prodotto);
-						session.setAttribute("carrello", carrello);
-					}
-					*/
-				//}
-				
-				//rs.close();
+			
 				
 				carrello.toString();
 				out.write(json.toJson(carrello.getCarrello()));

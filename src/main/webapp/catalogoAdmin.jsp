@@ -13,7 +13,6 @@
     <title>Amministratore - Catalogo Prodotti</title>
     <%@include file="include/head.jsp" %>
 </head>
-
 <body>
 <%@include file="include/header.jsp" %>
 <input type="hidden" id="statusRemove" value="<%= request.getAttribute("statusRemove")%>">
